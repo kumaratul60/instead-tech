@@ -4,6 +4,8 @@
 **Standard**: Draft-07 / 2020-12 Compatible JSON Schema & TypeScript
 **Target Environment**: Web (React / TypeScript), Server (Node.js / Headless Chrome), and Native PDF Engines
 
+> 📊 **Walkthrough Flow**: Jump directly to [Section 5: Step-by-Step Data Processing Pipeline](#5-step-by-step-data-processing-pipeline) or [Section 9: Key Architectural Decisions](#9-key-architectural-decisions--trade-off-rationale).
+
 ---
 
 ## 1. Executive Summary & Product Concept

@@ -2,6 +2,8 @@
 
 A complete, production-grade specification, JSON Schema, TypeScript type system, and modular reference engine for annotating and printing values onto U.S. tax forms (e.g. IRS Form 1040, W-2).
 
+> 🚀 **Quick Jump**: See the complete [Step-by-Step Data Processing Pipeline (Mermaid Flowchart)](https://github.com/kumaratul60/instead-tech/blob/main/SPECIFICATION.md#5-step-by-step-data-processing-pipeline) in [`SPECIFICATION.md`](https://github.com/kumaratul60/instead-tech/blob/main/SPECIFICATION.md).
+
 ---
 
 ## Key Features
