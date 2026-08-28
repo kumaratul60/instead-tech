@@ -107,14 +107,44 @@
 
 /* Print Styles */
 @media print {
-  body {
-    background: transparent !important;
+  @page {
+    size: 8.5in 11in;
+    margin: 0;
   }
+
+  body,
+  html,
+  #root,
+  .tax-form-overlay-root {
+    background: transparent !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
   .tax-toolbar {
     display: none !important;
   }
-  .debug-box,
-  .debug-comb {
+
+  .page-viewport,
+  .page-sheet {
+    display: block !important;
+    width: 612pt !important;
+    height: 792pt !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .tax-field.debug-box,
+  .tax-field.debug-comb {
     border: none !important;
     background: transparent !important;
   }

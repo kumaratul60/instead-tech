@@ -1,48 +1,48 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import type { FormAnnotationDocument } from './types/schema.ts';
-import { compileFormAnnotation } from './engine/compiler/index.ts';
-import { StudioHeader } from './components/studio/StudioHeader.tsx';
-import { StudioMobileTabs } from './components/studio/StudioMobileTabs.tsx';
-import { StudioEditorDrawer } from './components/studio/StudioEditorDrawer.tsx';
-import { StudioPreviewStage } from './components/studio/StudioPreviewStage.tsx';
-import defaultAnnotation from '../examples/form-1040-2025.annotation.json' with { type: 'json' };
-import defaultTaxData from '../examples/taxpayer-data.sample.json' with { type: 'json' };
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import type { FormAnnotationDocument } from "./types/schema.ts";
+import { compileFormAnnotation } from "./engine/compiler/index.ts";
+import { StudioHeader } from "./components/studio/StudioHeader.tsx";
+import { StudioMobileTabs } from "./components/studio/StudioMobileTabs.tsx";
+import { StudioEditorDrawer } from "./components/studio/StudioEditorDrawer.tsx";
+import { StudioPreviewStage } from "./components/studio/StudioPreviewStage.tsx";
+import defaultAnnotation from "../examples/form-1040-2025.annotation.json" with { type: "json" };
+import defaultTaxData from "../examples/taxpayer-data.sample.json" with { type: "json" };
 import {
   STUDIO_TABS,
   MOBILE_VIEW_TABS,
   UI_LABELS,
   ZOOM_OPTIONS,
-} from './constants/ui-constants.ts';
-import './styles/studio.css';
+} from "./constants/ui-constants.ts";
+import "./styles/studio.css";
 
 export const App: React.FC = () => {
   const [annotation, setAnnotation] = useState<FormAnnotationDocument>(
-    defaultAnnotation as unknown as FormAnnotationDocument
+    defaultAnnotation as unknown as FormAnnotationDocument,
   );
   const [taxData, setTaxData] = useState<unknown>(defaultTaxData);
-  const [activeTab, setActiveTab] = useState<'data' | 'annotation'>(
-    STUDIO_TABS.TAX_DATA.key
+  const [activeTab, setActiveTab] = useState<"data" | "annotation">(
+    STUDIO_TABS.TAX_DATA.key,
   );
   const [editorText, setEditorText] = useState<string>(
-    JSON.stringify(defaultTaxData, null, 2)
+    JSON.stringify(defaultTaxData, null, 2),
   );
   const [statusMessage, setStatusMessage] = useState<string>(
-    UI_LABELS.READY_STATUS
+    UI_LABELS.READY_STATUS,
   );
   const [isError, setIsError] = useState<boolean>(false);
   const [showDebug, setShowDebug] = useState<boolean>(true);
   const [zoomSelection, setZoomSelection] = useState<string>(
-    ZOOM_OPTIONS[0].value
+    ZOOM_OPTIONS[0].value,
   );
   const [effectiveScale, setEffectiveScale] = useState<number>(1.0);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
-  const [mobileView, setMobileView] = useState<'preview' | 'editor'>(
-    MOBILE_VIEW_TABS.PREVIEW.key
+  const [mobileView, setMobileView] = useState<"preview" | "editor">(
+    MOBILE_VIEW_TABS.PREVIEW.key,
   );
 
   // Compute Auto-Fit Scale
   const calculateAutoZoom = useCallback(() => {
-    const container = document.getElementById('preview-stage-container');
+    const container = document.getElementById("preview-stage-container");
     if (!container) return;
     const availableWidth = container.clientWidth - 32;
     const pageWidthPt = 612;
@@ -51,7 +51,7 @@ export const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (zoomSelection === 'auto') {
+    if (zoomSelection === "auto") {
       calculateAutoZoom();
     } else {
       setEffectiveScale(parseFloat(zoomSelection));
@@ -60,17 +60,17 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     function handleResize() {
-      if (zoomSelection === 'auto') {
+      if (zoomSelection === "auto") {
         calculateAutoZoom();
       }
     }
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [zoomSelection, calculateAutoZoom]);
 
   // Tab switching
   const handleTabChange = useCallback(
-    (tab: 'data' | 'annotation') => {
+    (tab: "data" | "annotation") => {
       setActiveTab(tab);
       if (tab === STUDIO_TABS.TAX_DATA.key) {
         setEditorText(JSON.stringify(taxData, null, 2));
@@ -78,7 +78,7 @@ export const App: React.FC = () => {
         setEditorText(JSON.stringify(annotation, null, 2));
       }
     },
-    [taxData, annotation]
+    [taxData, annotation],
   );
 
   // Compile instructions via FormAnnotationCompiler
@@ -92,7 +92,7 @@ export const App: React.FC = () => {
     try {
       if (!editorText.trim()) {
         setIsError(true);
-        setStatusMessage('Error: JSON input cannot be empty');
+        setStatusMessage("Error: JSON input cannot be empty");
         return;
       }
       const parsed = JSON.parse(editorText);
@@ -112,15 +112,15 @@ export const App: React.FC = () => {
   // Toggle Theme
   const handleToggleTheme = useCallback(() => {
     const current =
-      document.documentElement.getAttribute('data-theme') || 'light';
-    const next = current === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', next);
+      document.documentElement.getAttribute("data-theme") || "light";
+    const next = current === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", next);
   }, []);
 
   return (
     <div className="app-root">
       <StudioHeader
-        formId={annotation?.formId || 'IRS-1040-2025'}
+        formId={annotation?.formId || "IRS-1040-2025"}
         taxYear={annotation?.taxYear || 2025}
         showDebug={showDebug}
         onToggleDebug={setShowDebug}

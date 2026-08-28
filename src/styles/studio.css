@@ -265,30 +265,66 @@ textarea.studio-json-editor:focus {
   }
 }
 
-/* Print Styles */
+/* Multi-Page Print Stylesheet */
 @media print {
-  body {
-    background: transparent !important;
+  @page {
+    size: 8.5in 11in;
+    margin: 0;
   }
+
+  html,
+  body,
+  #root,
+  .app-root,
+  .studio-main-container,
+  .studio-preview-stage,
+  .tax-form-overlay-root {
+    display: block !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+  }
+
   .studio-header,
   .mobile-view-tabs,
-  .studio-sidebar {
+  .studio-sidebar,
+  .tax-toolbar,
+  .page-watermark {
     display: none !important;
   }
-  .studio-preview-stage {
-    padding: 0 !important;
-    background: transparent !important;
-    overflow: visible !important;
-  }
+
   .page-scale-wrapper {
+    display: block !important;
     transform: none !important;
-    margin-bottom: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    page-break-after: always !important;
+    break-after: page !important;
   }
+
   .page-sheet,
   .page-viewport {
+    display: block !important;
+    width: 612pt !important;
+    height: 792pt !important;
     margin: 0 !important;
     box-shadow: none !important;
     border: none !important;
     page-break-after: always !important;
+    break-after: page !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .tax-field.debug-box,
+  .tax-field.debug-comb {
+    border: none !important;
+    background: transparent !important;
   }
 }
