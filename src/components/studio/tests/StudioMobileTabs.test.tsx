@@ -4,7 +4,7 @@ import { StudioMobileTabs } from "../StudioMobileTabs.tsx";
 import { MOBILE_VIEW_TABS } from "../../../constants/ui-constants.ts";
 
 describe("StudioMobileTabs Component DOM Rendering", () => {
-  it("should render mobile view tabs and trigger view change", () => {
+  it("should render mobile view tabs and trigger view change using accessible roles", () => {
     const handleViewChange = vi.fn();
 
     render(
@@ -14,7 +14,9 @@ describe("StudioMobileTabs Component DOM Rendering", () => {
       />,
     );
 
-    const editorBtn = screen.getByText(MOBILE_VIEW_TABS.EDITOR.label);
+    const editorBtn = screen.getByRole("button", {
+      name: MOBILE_VIEW_TABS.EDITOR.label,
+    });
     expect(editorBtn).toBeInTheDocument();
 
     fireEvent.click(editorBtn);

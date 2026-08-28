@@ -6,17 +6,13 @@ export interface TaxFormFieldElementProps {
   instruction: RenderInstruction;
   scale?: number;
   showDebug?: boolean;
-  onClick?: (fieldId: string) => void;
 }
 
 export const TaxFormFieldElement: React.FC<TaxFormFieldElementProps> = ({
   instruction,
   scale = 1.0,
   showDebug = false,
-  onClick,
 }) => {
-  const handleClick = onClick ? () => onClick(instruction.fieldId) : undefined;
-
   const toBoxStyle = (
     bounds: BoundingBox,
     fontSize = 12,
@@ -33,7 +29,6 @@ export const TaxFormFieldElement: React.FC<TaxFormFieldElementProps> = ({
       "tax-field",
       typeClass,
       showDebug ? (isComb ? "debug-comb" : "debug-box") : "",
-      onClick ? "clickable" : "",
     ]
       .filter(Boolean)
       .join(" ");
@@ -44,10 +39,11 @@ export const TaxFormFieldElement: React.FC<TaxFormFieldElementProps> = ({
       return (
         <div
           id={instruction.fieldId}
+          data-field-id={instruction.fieldId}
           className={getClassName(`align-${styling.textAlign || "left"}`)}
-          onClick={handleClick}
           title={`${instruction.fieldId}: ${text}`}
           style={toBoxStyle(bounds, calculatedFontSize)}
+          aria-label={`${instruction.fieldId}: ${text}`}
         >
           {text}
         </div>
@@ -57,12 +53,11 @@ export const TaxFormFieldElement: React.FC<TaxFormFieldElementProps> = ({
     case "comb_cells": {
       const { cells, calculatedFontSize } = instruction;
       return (
-        <div id={instruction.fieldId}>
+        <div id={instruction.fieldId} data-field-id={instruction.fieldId}>
           {cells.map((cell) => (
             <div
               key={`${instruction.fieldId}_cell_${cell.cellIndex}`}
               className={getClassName("align-center", true)}
-              onClick={handleClick}
               style={toBoxStyle(cell.bounds, calculatedFontSize)}
             >
               {cell.char}
@@ -77,9 +72,10 @@ export const TaxFormFieldElement: React.FC<TaxFormFieldElementProps> = ({
       return (
         <div
           id={instruction.fieldId}
+          data-field-id={instruction.fieldId}
           className={getClassName("mark")}
-          onClick={handleClick}
           style={toBoxStyle(bounds, styling.fontSize || 12)}
+          aria-label={`${instruction.fieldId}: ${symbol}`}
         >
           {symbol}
         </div>
@@ -90,16 +86,18 @@ export const TaxFormFieldElement: React.FC<TaxFormFieldElementProps> = ({
       const { dollars, cents, dollarsBounds, centsBounds, calculatedFontSize } =
         instruction;
       return (
-        <div id={instruction.fieldId} onClick={handleClick}>
+        <div id={instruction.fieldId} data-field-id={instruction.fieldId}>
           <div
             className={getClassName("align-right")}
             style={toBoxStyle(dollarsBounds, calculatedFontSize)}
+            aria-label={`${instruction.fieldId} dollars: ${dollars}`}
           >
             {dollars}
           </div>
           <div
             className={getClassName("align-center")}
             style={toBoxStyle(centsBounds, calculatedFontSize)}
+            aria-label={`${instruction.fieldId} cents: ${cents}`}
           >
             {cents}
           </div>

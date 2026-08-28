@@ -11,19 +11,23 @@ export const StudioMobileTabs: React.FC<StudioMobileTabsProps> = ({
   onViewChange,
 }) => {
   return (
-    <div className="mobile-view-tabs">
+    <nav className="mobile-view-tabs">
       <button
-        className={`mobile-tab-btn ${activeView === MOBILE_VIEW_TABS.PREVIEW.key ? "active" : ""}`}
+        className={`mobile-tab-btn ${
+          activeView === MOBILE_VIEW_TABS.PREVIEW.key ? "active" : ""
+        }`}
         onClick={() => onViewChange(MOBILE_VIEW_TABS.PREVIEW.key)}
       >
         {MOBILE_VIEW_TABS.PREVIEW.label}
       </button>
       <button
-        className={`mobile-tab-btn ${activeView === MOBILE_VIEW_TABS.EDITOR.key ? "active" : ""}`}
+        className={`mobile-tab-btn ${
+          activeView === MOBILE_VIEW_TABS.EDITOR.key ? "active" : ""
+        }`}
         onClick={() => onViewChange(MOBILE_VIEW_TABS.EDITOR.key)}
       >
         {MOBILE_VIEW_TABS.EDITOR.label}
       </button>
-    </div>
+    </nav>
   );
 };

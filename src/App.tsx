@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import type { FormAnnotationDocument } from "./types/schema.ts";
 import { compileFormAnnotation } from "./engine/compiler/index.ts";
 import { StudioHeader } from "./components/studio/StudioHeader.tsx";
@@ -41,14 +41,14 @@ export const App: React.FC = () => {
   );
 
   // Compute Auto-Fit Scale
-  const calculateAutoZoom = useCallback(() => {
+  const calculateAutoZoom = () => {
     const container = document.getElementById("preview-stage-container");
     if (!container) return;
     const availableWidth = container.clientWidth - 32;
     const pageWidthPt = 612;
     const scale = Math.min(1.2, Math.max(0.3, availableWidth / pageWidthPt));
     setEffectiveScale(scale);
-  }, []);
+  };
 
   useEffect(() => {
     if (zoomSelection === "auto") {
@@ -56,7 +56,7 @@ export const App: React.FC = () => {
     } else {
       setEffectiveScale(parseFloat(zoomSelection));
     }
-  }, [zoomSelection, calculateAutoZoom, isSidebarCollapsed, mobileView]);
+  }, [zoomSelection, isSidebarCollapsed, mobileView]);
 
   useEffect(() => {
     function handleResize() {
@@ -66,29 +66,26 @@ export const App: React.FC = () => {
     }
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [zoomSelection, calculateAutoZoom]);
+  }, [zoomSelection]);
 
   // Tab switching
-  const handleTabChange = useCallback(
-    (tab: "data" | "annotation") => {
-      setActiveTab(tab);
-      if (tab === STUDIO_TABS.TAX_DATA.key) {
-        setEditorText(JSON.stringify(taxData, null, 2));
-      } else {
-        setEditorText(JSON.stringify(annotation, null, 2));
-      }
-    },
-    [taxData, annotation],
-  );
+  const handleTabChange = (tab: "data" | "annotation") => {
+    setActiveTab(tab);
+    if (tab === STUDIO_TABS.TAX_DATA.key) {
+      setEditorText(JSON.stringify(taxData, null, 2));
+    } else {
+      setEditorText(JSON.stringify(annotation, null, 2));
+    }
+  };
 
-  // Compile instructions via FormAnnotationCompiler
+  // Compile instructions via pure compileFormAnnotation (useMemo used only for heavy calculation)
   const compiledResult = useMemo(() => {
     if (!annotation || !taxData) return null;
     return compileFormAnnotation(annotation, taxData);
   }, [annotation, taxData]);
 
   // Apply Changes from Textarea
-  const handleApplyChanges = useCallback(() => {
+  const handleApplyChanges = () => {
     try {
       if (!editorText.trim()) {
         setIsError(true);
@@ -107,15 +104,15 @@ export const App: React.FC = () => {
       setIsError(true);
       setStatusMessage(`JSON Error: ${(err as Error).message}`);
     }
-  }, [editorText, activeTab]);
+  };
 
   // Toggle Theme
-  const handleToggleTheme = useCallback(() => {
+  const handleToggleTheme = () => {
     const current =
       document.documentElement.getAttribute("data-theme") || "light";
     const next = current === "light" ? "dark" : "light";
     document.documentElement.setAttribute("data-theme", next);
-  }, []);
+  };
 
   return (
     <div className="app-root">

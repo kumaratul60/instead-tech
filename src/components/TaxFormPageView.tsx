@@ -17,9 +17,20 @@ export const TaxFormPageView: React.FC<TaxFormPageViewProps> = ({
   backgroundImageUrl,
   onFieldClick,
 }) => {
+  const handleViewportClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!onFieldClick) return;
+    const target = (e.target as HTMLElement).closest<HTMLElement>(
+      "[data-field-id]",
+    );
+    if (target?.dataset?.fieldId) {
+      onFieldClick(target.dataset.fieldId);
+    }
+  };
+
   return (
     <div
       className="page-viewport"
+      onClick={onFieldClick ? handleViewportClick : undefined}
       style={{
         width: `${page.width * scale}px`,
         height: `${page.height * scale}px`,
@@ -34,7 +45,6 @@ export const TaxFormPageView: React.FC<TaxFormPageViewProps> = ({
           instruction={inst}
           scale={scale}
           showDebug={showDebug}
-          onClick={onFieldClick}
         />
       ))}
     </div>

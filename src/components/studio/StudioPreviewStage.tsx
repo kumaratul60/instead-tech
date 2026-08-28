@@ -37,10 +37,12 @@ export const StudioPreviewStage: React.FC<StudioPreviewStageProps> = ({
         <div
           key={`page_wrapper_${page.pageNumber}`}
           className="page-scale-wrapper"
-          style={{
-            transform: `scale(${scale})`,
-            marginBottom: `${page.height * (scale - 1)}px`,
-          }}
+          style={
+            {
+              "--page-scale": scale,
+              "--page-margin-bottom": `${page.height * (scale - 1)}px`,
+            } as React.CSSProperties
+          }
         >
           <div
             className="page-sheet"

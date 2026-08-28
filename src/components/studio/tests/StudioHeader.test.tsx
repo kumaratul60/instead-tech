@@ -4,7 +4,7 @@ import { StudioHeader } from "../StudioHeader.tsx";
 import { UI_LABELS } from "../../../constants/ui-constants.ts";
 
 describe("StudioHeader Component DOM Rendering", () => {
-  it("should render header elements and trigger callbacks", () => {
+  it("should render header elements and trigger callbacks using accessible roles and text", () => {
     const handleRecompile = vi.fn();
     const handlePrint = vi.fn();
     const handleToggleTheme = vi.fn();
@@ -27,11 +27,15 @@ describe("StudioHeader Component DOM Rendering", () => {
 
     expect(screen.getByText(/IRS-1040-2025/)).toBeInTheDocument();
 
-    const recompileBtn = screen.getByText(UI_LABELS.RECOMPILE_BUTTON);
+    const recompileBtn = screen.getByRole("button", {
+      name: UI_LABELS.RECOMPILE_BUTTON,
+    });
     fireEvent.click(recompileBtn);
     expect(handleRecompile).toHaveBeenCalled();
 
-    const printBtn = screen.getByText(UI_LABELS.PRINT_PDF_BUTTON);
+    const printBtn = screen.getByRole("button", {
+      name: UI_LABELS.PRINT_PDF_BUTTON,
+    });
     fireEvent.click(printBtn);
     expect(handlePrint).toHaveBeenCalled();
 
