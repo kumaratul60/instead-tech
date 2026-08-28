@@ -1,0 +1,411 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TaxFormAnnotationDocument",
+  "description": "Schema definition for annotating printable fields, character comb boxes, checkboxes, and repeating groups on U.S. Tax Forms.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "formId",
+    "formTitle",
+    "taxYear",
+    "pageCount",
+    "pages",
+    "fields"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "description": "Semantic version of the annotation specification (e.g. '1.0.0')"
+    },
+    "formId": {
+      "type": "string",
+      "description": "Unique identifier for the form (e.g. 'IRS-1040-2025')"
+    },
+    "formTitle": {
+      "type": "string",
+      "description": "Official title of the tax form"
+    },
+    "taxYear": {
+      "type": "integer",
+      "minimum": 1900,
+      "maximum": 2100,
+      "description": "Applicable tax year"
+    },
+    "pageCount": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total number of pages in the form"
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/PageSpecification"
+      }
+    },
+    "defaultStyling": {
+      "$ref": "#/definitions/TypographyStyle"
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/FieldAnnotation"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "definitions": {
+    "BoundingBox": {
+      "type": "object",
+      "required": ["x", "y", "width", "height"],
+      "properties": {
+        "x": {
+          "type": "number",
+          "description": "X coordinate from origin"
+        },
+        "y": {
+          "type": "number",
+          "description": "Y coordinate from origin"
+        },
+        "width": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Width of the bounding box"
+        },
+        "height": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Height of the bounding box"
+        }
+      }
+    },
+    "PageSpecification": {
+      "type": "object",
+      "required": ["pageNumber", "width", "height", "units"],
+      "properties": {
+        "pageNumber": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "width": {
+          "type": "number",
+          "minimum": 1
+        },
+        "height": {
+          "type": "number",
+          "minimum": 1
+        },
+        "units": {
+          "type": "string",
+          "enum": ["points", "percentage", "inches", "mm"]
+        },
+        "origin": {
+          "type": "string",
+          "enum": ["top_left", "bottom_left"],
+          "default": "top_left"
+        },
+        "backgroundImageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "DataBinding": {
+      "type": "object",
+      "required": ["path"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "JSONPath or dot-notation path to extract from data payload (e.g. '$.taxpayer.ssn')"
+        },
+        "defaultValue": {
+          "type": ["string", "number", "boolean", "null"]
+        },
+        "fallbackPath": {
+          "type": "string"
+        }
+      }
+    },
+    "FieldCondition": {
+      "type": "object",
+      "required": ["path", "operator"],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "operator": {
+          "type": "string",
+          "enum": [
+            "equals",
+            "not_equals",
+            "in",
+            "not_in",
+            "greater_than",
+            "less_than",
+            "truthy",
+            "falsy",
+            "exists"
+          ]
+        },
+        "value": {
+          "type": ["string", "number", "boolean", "array", "null"]
+        }
+      }
+    },
+    "FormattingOptions": {
+      "type": "object",
+      "properties": {
+        "formatter": {
+          "type": "string",
+          "enum": [
+            "none",
+            "currency",
+            "integer",
+            "decimal",
+            "ssn",
+            "ein",
+            "phone",
+            "zip",
+            "date",
+            "uppercase",
+            "lowercase",
+            "titlecase",
+            "comb_array",
+            "dollars_only",
+            "cents_only"
+          ]
+        },
+        "datePattern": {
+          "type": "string"
+        },
+        "mask": {
+          "type": "string"
+        },
+        "decimalPlaces": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "includeCurrencySymbol": {
+          "type": "boolean"
+        },
+        "negativeStyle": {
+          "type": "string",
+          "enum": ["minus", "parentheses"]
+        },
+        "padLength": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "padChar": {
+          "type": "string"
+        },
+        "stripNonDigits": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TypographyStyle": {
+      "type": "object",
+      "properties": {
+        "fontFamily": {
+          "type": "string"
+        },
+        "fontSize": {
+          "type": "number",
+          "minimum": 1
+        },
+        "minFontSize": {
+          "type": "number",
+          "minimum": 1
+        },
+        "textAlign": {
+          "type": "string",
+          "enum": ["left", "center", "right"]
+        },
+        "verticalAlign": {
+          "type": "string",
+          "enum": ["top", "middle", "bottom"]
+        },
+        "lineHeight": {
+          "type": "number"
+        },
+        "letterSpacing": {
+          "type": "number"
+        },
+        "color": {
+          "type": "string"
+        },
+        "overflow": {
+          "type": "string",
+          "enum": ["truncate", "auto_shrink_font", "wrap", "clip"]
+        }
+      }
+    },
+    "CombConfiguration": {
+      "type": "object",
+      "required": ["cellCount"],
+      "properties": {
+        "cellCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "cellWidth": {
+          "type": "number",
+          "minimum": 0
+        },
+        "pitch": {
+          "type": "number",
+          "minimum": 0
+        },
+        "alignment": {
+          "type": "string",
+          "enum": ["left", "right", "center"]
+        },
+        "segmentGaps": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "RadioOption": {
+      "type": "object",
+      "required": ["value", "label", "bounds"],
+      "properties": {
+        "value": {
+          "type": ["string", "number", "boolean"]
+        },
+        "label": {
+          "type": "string"
+        },
+        "bounds": {
+          "$ref": "#/definitions/BoundingBox"
+        }
+      }
+    },
+    "SplitAmountConfiguration": {
+      "type": "object",
+      "required": ["dollarsBounds", "centsBounds"],
+      "properties": {
+        "dollarsBounds": {
+          "$ref": "#/definitions/BoundingBox"
+        },
+        "centsBounds": {
+          "$ref": "#/definitions/BoundingBox"
+        },
+        "decimals": {
+          "type": "integer",
+          "default": 2
+        }
+      }
+    },
+    "RepeatingGroupColumn": {
+      "type": "object",
+      "required": ["key", "xOffset", "width"],
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "xOffset": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number"
+        },
+        "formatting": {
+          "$ref": "#/definitions/FormattingOptions"
+        },
+        "styling": {
+          "$ref": "#/definitions/TypographyStyle"
+        }
+      }
+    },
+    "RepeatingGroupConfiguration": {
+      "type": "object",
+      "required": ["maxRows", "rowStride", "columns"],
+      "properties": {
+        "maxRows": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "rowStride": {
+          "type": "number",
+          "minimum": 0
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RepeatingGroupColumn"
+          }
+        }
+      }
+    },
+    "FieldAnnotation": {
+      "type": "object",
+      "required": ["id", "name", "page", "type", "bounds"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "text",
+            "numeric",
+            "comb",
+            "checkbox",
+            "radio_group",
+            "split_amount",
+            "repeating_group"
+          ]
+        },
+        "bounds": {
+          "$ref": "#/definitions/BoundingBox"
+        },
+        "binding": {
+          "$ref": "#/definitions/DataBinding"
+        },
+        "formatting": {
+          "$ref": "#/definitions/FormattingOptions"
+        },
+        "styling": {
+          "$ref": "#/definitions/TypographyStyle"
+        },
+        "markSymbol": {
+          "type": "string"
+        },
+        "combConfig": {
+          "$ref": "#/definitions/CombConfiguration"
+        },
+        "radioOptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RadioOption"
+          }
+        },
+        "splitAmountConfig": {
+          "$ref": "#/definitions/SplitAmountConfiguration"
+        },
+        "repeatingGroupConfig": {
+          "$ref": "#/definitions/RepeatingGroupConfiguration"
+        },
+        "condition": {
+          "$ref": "#/definitions/FieldCondition"
+        },
+        "metadata": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

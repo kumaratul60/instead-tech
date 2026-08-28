@@ -1,0 +1,121 @@
+/* Tax Form Overlay & Element Classes */
+
+.tax-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: var(--toolbar-bg);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.tax-toolbar-title {
+  font-weight: bold;
+  color: var(--text);
+}
+
+.tax-toolbar-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.tax-toolbar-pagination {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.tax-toolbar-page-btn {
+  padding: 4px 8px;
+}
+
+.tax-toolbar-page-label {
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+.tax-toolbar-print-btn {
+  padding: 6px 16px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.tax-toolbar-print-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.tax-form-overlay-root {
+  font-family: system-ui, sans-serif;
+  padding: 16px;
+  width: 100%;
+}
+
+/* Generic Overlay Element Classes */
+.tax-field {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  color: #000000;
+  white-space: nowrap;
+  overflow: hidden;
+  user-select: none;
+}
+
+.tax-field.align-left {
+  justify-content: flex-start;
+}
+
+.tax-field.align-center {
+  justify-content: center;
+}
+
+.tax-field.align-right {
+  justify-content: flex-end;
+}
+
+.tax-field.mark {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  justify-content: center;
+}
+
+.tax-field.clickable {
+  cursor: pointer;
+}
+
+.tax-field.debug-box {
+  border: 1px dashed rgba(0, 120, 255, 0.7);
+  background-color: rgba(0, 120, 255, 0.08);
+}
+
+.tax-field.debug-comb {
+  border: 1px solid rgba(255, 140, 0, 0.7);
+  background-color: rgba(255, 140, 0, 0.08);
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: transparent !important;
+  }
+  .tax-toolbar {
+    display: none !important;
+  }
+  .debug-box,
+  .debug-comb {
+    border: none !important;
+    background: transparent !important;
+  }
+}

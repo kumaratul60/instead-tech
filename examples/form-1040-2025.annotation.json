@@ -1,0 +1,755 @@
+{
+  "schemaVersion": "1.0.0",
+  "formId": "IRS-1040-2025",
+  "formTitle": "U.S. Individual Income Tax Return - Form 1040",
+  "taxYear": 2025,
+  "pageCount": 2,
+  "pages": [
+    {
+      "pageNumber": 1,
+      "width": 612,
+      "height": 792,
+      "units": "points",
+      "origin": "top_left",
+      "backgroundImageUrl": "/assets/irs_1040_page1.png"
+    },
+    {
+      "pageNumber": 2,
+      "width": 612,
+      "height": 792,
+      "units": "points",
+      "origin": "top_left",
+      "backgroundImageUrl": "/assets/irs_1040_page2.png"
+    }
+  ],
+  "defaultStyling": {
+    "fontFamily": "Courier",
+    "fontSize": 9,
+    "minFontSize": 6,
+    "color": "#000000",
+    "textAlign": "left",
+    "overflow": "auto_shrink_font"
+  },
+  "fields": [
+    {
+      "id": "f1040_p1_filing_status",
+      "name": "Filing Status Radio Selection",
+      "page": 1,
+      "type": "radio_group",
+      "bounds": {
+        "x": 36,
+        "y": 68,
+        "width": 540,
+        "height": 18
+      },
+      "binding": {
+        "path": "$.filingStatus"
+      },
+      "markSymbol": "X",
+      "radioOptions": [
+        {
+          "value": "SINGLE",
+          "label": "Single",
+          "bounds": {
+            "x": 68,
+            "y": 72,
+            "width": 10,
+            "height": 10
+          }
+        },
+        {
+          "value": "MARRIED_FILING_JOINTLY",
+          "label": "Married filing jointly",
+          "bounds": {
+            "x": 128,
+            "y": 72,
+            "width": 10,
+            "height": 10
+          }
+        },
+        {
+          "value": "MARRIED_FILING_SEPARATELY",
+          "label": "Married filing separately",
+          "bounds": {
+            "x": 268,
+            "y": 72,
+            "width": 10,
+            "height": 10
+          }
+        },
+        {
+          "value": "HEAD_OF_HOUSEHOLD",
+          "label": "Head of household",
+          "bounds": {
+            "x": 420,
+            "y": 72,
+            "width": 10,
+            "height": 10
+          }
+        },
+        {
+          "value": "QUALIFYING_SURVIVING_SPOUSE",
+          "label": "Qualifying surviving spouse",
+          "bounds": {
+            "x": 526,
+            "y": 72,
+            "width": 10,
+            "height": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "f1040_p1_taxpayer_first_name",
+      "name": "Your first name and middle initial",
+      "page": 1,
+      "type": "text",
+      "bounds": {
+        "x": 36,
+        "y": 104,
+        "width": 210,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.primaryTaxpayer.firstName"
+      },
+      "formatting": {
+        "formatter": "uppercase"
+      }
+    },
+    {
+      "id": "f1040_p1_taxpayer_mi",
+      "name": "Your middle initial",
+      "page": 1,
+      "type": "text",
+      "bounds": {
+        "x": 248,
+        "y": 104,
+        "width": 20,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.primaryTaxpayer.middleInitial"
+      },
+      "styling": {
+        "textAlign": "center"
+      },
+      "formatting": {
+        "formatter": "uppercase"
+      }
+    },
+    {
+      "id": "f1040_p1_taxpayer_last_name",
+      "name": "Your last name",
+      "page": 1,
+      "type": "text",
+      "bounds": {
+        "x": 272,
+        "y": 104,
+        "width": 180,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.primaryTaxpayer.lastName"
+      },
+      "formatting": {
+        "formatter": "uppercase"
+      }
+    },
+    {
+      "id": "f1040_p1_taxpayer_ssn",
+      "name": "Your social security number (Comb 9 Cells)",
+      "page": 1,
+      "type": "comb",
+      "bounds": {
+        "x": 460,
+        "y": 104,
+        "width": 115,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.primaryTaxpayer.ssn"
+      },
+      "formatting": {
+        "formatter": "comb_array",
+        "stripNonDigits": true
+      },
+      "combConfig": {
+        "cellCount": 9,
+        "cellWidth": 11.5,
+        "pitch": 12.8,
+        "alignment": "center",
+        "segmentGaps": [2.5, 2.5]
+      }
+    },
+    {
+      "id": "f1040_p1_spouse_first_name",
+      "name": "Spouse's first name and middle initial",
+      "page": 1,
+      "type": "text",
+      "bounds": {
+        "x": 36,
+        "y": 124,
+        "width": 210,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.spouseTaxpayer.firstName"
+      },
+      "condition": {
+        "path": "$.filingStatus",
+        "operator": "equals",
+        "value": "MARRIED_FILING_JOINTLY"
+      },
+      "formatting": {
+        "formatter": "uppercase"
+      }
+    },
+    {
+      "id": "f1040_p1_spouse_last_name",
+      "name": "Spouse's last name",
+      "page": 1,
+      "type": "text",
+      "bounds": {
+        "x": 272,
+        "y": 124,
+        "width": 180,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.spouseTaxpayer.lastName"
+      },
+      "condition": {
+        "path": "$.filingStatus",
+        "operator": "equals",
+        "value": "MARRIED_FILING_JOINTLY"
+      },
+      "formatting": {
+        "formatter": "uppercase"
+      }
+    },
+    {
+      "id": "f1040_p1_spouse_ssn",
+      "name": "Spouse's social security number (Comb 9 Cells)",
+      "page": 1,
+      "type": "comb",
+      "bounds": {
+        "x": 460,
+        "y": 124,
+        "width": 115,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.spouseTaxpayer.ssn"
+      },
+      "condition": {
+        "path": "$.filingStatus",
+        "operator": "equals",
+        "value": "MARRIED_FILING_JOINTLY"
+      },
+      "formatting": {
+        "formatter": "comb_array",
+        "stripNonDigits": true
+      },
+      "combConfig": {
+        "cellCount": 9,
+        "cellWidth": 11.5,
+        "pitch": 12.8,
+        "alignment": "center",
+        "segmentGaps": [2.5, 2.5]
+      }
+    },
+    {
+      "id": "f1040_p1_home_address",
+      "name": "Home address (number and street)",
+      "page": 1,
+      "type": "text",
+      "bounds": {
+        "x": 36,
+        "y": 144,
+        "width": 380,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.address.street"
+      },
+      "formatting": {
+        "formatter": "uppercase"
+      }
+    },
+    {
+      "id": "f1040_p1_apt_no",
+      "name": "Apt. no.",
+      "page": 1,
+      "type": "text",
+      "bounds": {
+        "x": 420,
+        "y": 144,
+        "width": 155,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.address.aptNumber"
+      },
+      "formatting": {
+        "formatter": "uppercase"
+      }
+    },
+    {
+      "id": "f1040_p1_city",
+      "name": "City, town, or post office",
+      "page": 1,
+      "type": "text",
+      "bounds": {
+        "x": 36,
+        "y": 164,
+        "width": 300,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.address.city"
+      },
+      "formatting": {
+        "formatter": "uppercase"
+      }
+    },
+    {
+      "id": "f1040_p1_state",
+      "name": "State",
+      "page": 1,
+      "type": "text",
+      "bounds": {
+        "x": 345,
+        "y": 164,
+        "width": 45,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.address.state"
+      },
+      "styling": {
+        "textAlign": "center"
+      },
+      "formatting": {
+        "formatter": "uppercase"
+      }
+    },
+    {
+      "id": "f1040_p1_zip_code",
+      "name": "ZIP code",
+      "page": 1,
+      "type": "text",
+      "bounds": {
+        "x": 400,
+        "y": 164,
+        "width": 75,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.address.zipCode"
+      },
+      "styling": {
+        "letterSpacing": 2,
+        "textAlign": "center"
+      }
+    },
+    {
+      "id": "f1040_p1_digital_assets_yes",
+      "name": "Digital Assets - Yes Checkbox",
+      "page": 1,
+      "type": "checkbox",
+      "bounds": {
+        "x": 435,
+        "y": 208,
+        "width": 10,
+        "height": 10
+      },
+      "binding": {
+        "path": "$.digitalAssetsAnswer"
+      },
+      "condition": {
+        "path": "$.digitalAssetsAnswer",
+        "operator": "equals",
+        "value": true
+      },
+      "markSymbol": "X"
+    },
+    {
+      "id": "f1040_p1_digital_assets_no",
+      "name": "Digital Assets - No Checkbox",
+      "page": 1,
+      "type": "checkbox",
+      "bounds": {
+        "x": 485,
+        "y": 208,
+        "width": 10,
+        "height": 10
+      },
+      "binding": {
+        "path": "$.digitalAssetsAnswer"
+      },
+      "condition": {
+        "path": "$.digitalAssetsAnswer",
+        "operator": "equals",
+        "value": false
+      },
+      "markSymbol": "X"
+    },
+    {
+      "id": "f1040_p1_line_1a_w2_wages",
+      "name": "Line 1a: Total amount from Form(s) W-2, box 1",
+      "page": 1,
+      "type": "split_amount",
+      "bounds": {
+        "x": 440,
+        "y": 300,
+        "width": 135,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.income.totalW2Wages"
+      },
+      "splitAmountConfig": {
+        "dollarsBounds": {
+          "x": 440,
+          "y": 300,
+          "width": 105,
+          "height": 14
+        },
+        "centsBounds": {
+          "x": 548,
+          "y": 300,
+          "width": 27,
+          "height": 14
+        }
+      }
+    },
+    {
+      "id": "f1040_p1_line_2b_taxable_interest",
+      "name": "Line 2b: Taxable interest",
+      "page": 1,
+      "type": "split_amount",
+      "bounds": {
+        "x": 440,
+        "y": 328,
+        "width": 135,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.income.taxableInterest"
+      },
+      "splitAmountConfig": {
+        "dollarsBounds": {
+          "x": 440,
+          "y": 328,
+          "width": 105,
+          "height": 14
+        },
+        "centsBounds": {
+          "x": 548,
+          "y": 328,
+          "width": 27,
+          "height": 14
+        }
+      }
+    },
+    {
+      "id": "f1040_p1_line_3b_ordinary_dividends",
+      "name": "Line 3b: Ordinary dividends",
+      "page": 1,
+      "type": "split_amount",
+      "bounds": {
+        "x": 440,
+        "y": 356,
+        "width": 135,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.income.ordinaryDividends"
+      },
+      "splitAmountConfig": {
+        "dollarsBounds": {
+          "x": 440,
+          "y": 356,
+          "width": 105,
+          "height": 14
+        },
+        "centsBounds": {
+          "x": 548,
+          "y": 356,
+          "width": 27,
+          "height": 14
+        }
+      }
+    },
+    {
+      "id": "f1040_p1_line_1z_total_income",
+      "name": "Line 1z: Add lines 1a through 1h",
+      "page": 1,
+      "type": "split_amount",
+      "bounds": {
+        "x": 440,
+        "y": 420,
+        "width": 135,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.income.totalIncome"
+      },
+      "splitAmountConfig": {
+        "dollarsBounds": {
+          "x": 440,
+          "y": 420,
+          "width": 105,
+          "height": 14
+        },
+        "centsBounds": {
+          "x": 548,
+          "y": 420,
+          "width": 27,
+          "height": 14
+        }
+      }
+    },
+    {
+      "id": "f1040_p2_line_25d_fed_withholding",
+      "name": "Page 2 Line 25d: Federal income tax withheld",
+      "page": 2,
+      "type": "split_amount",
+      "bounds": {
+        "x": 440,
+        "y": 190,
+        "width": 135,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.payments.federalWithholdingTotal"
+      },
+      "splitAmountConfig": {
+        "dollarsBounds": {
+          "x": 440,
+          "y": 190,
+          "width": 105,
+          "height": 14
+        },
+        "centsBounds": {
+          "x": 548,
+          "y": 190,
+          "width": 27,
+          "height": 14
+        }
+      }
+    },
+    {
+      "id": "f1040_p2_line_33_total_payments",
+      "name": "Page 2 Line 33: Total payments",
+      "page": 2,
+      "type": "split_amount",
+      "bounds": {
+        "x": 440,
+        "y": 300,
+        "width": 135,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.payments.federalWithholdingTotal"
+      },
+      "splitAmountConfig": {
+        "dollarsBounds": {
+          "x": 440,
+          "y": 300,
+          "width": 105,
+          "height": 14
+        },
+        "centsBounds": {
+          "x": 548,
+          "y": 300,
+          "width": 27,
+          "height": 14
+        }
+      }
+    },
+    {
+      "id": "f1040_p2_line_34_overpaid",
+      "name": "Page 2 Line 34: Overpaid / Refund Amount",
+      "page": 2,
+      "type": "split_amount",
+      "bounds": {
+        "x": 440,
+        "y": 330,
+        "width": 135,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.refund.amount"
+      },
+      "splitAmountConfig": {
+        "dollarsBounds": {
+          "x": 440,
+          "y": 330,
+          "width": 105,
+          "height": 14
+        },
+        "centsBounds": {
+          "x": 548,
+          "y": 330,
+          "width": 27,
+          "height": 14
+        }
+      }
+    },
+    {
+      "id": "f1040_p2_line_35a_refund",
+      "name": "Page 2 Line 35a: Amount refunded to you",
+      "page": 2,
+      "type": "split_amount",
+      "bounds": {
+        "x": 440,
+        "y": 360,
+        "width": 135,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.refund.amount"
+      },
+      "splitAmountConfig": {
+        "dollarsBounds": {
+          "x": 440,
+          "y": 360,
+          "width": 105,
+          "height": 14
+        },
+        "centsBounds": {
+          "x": 548,
+          "y": 360,
+          "width": 27,
+          "height": 14
+        }
+      }
+    },
+    {
+      "id": "f1040_p2_refund_routing_number",
+      "name": "Page 2 Line 35b: Routing number (Comb 9 Cells)",
+      "page": 2,
+      "type": "comb",
+      "bounds": {
+        "x": 135,
+        "y": 450,
+        "width": 110,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.refund.routingNumber"
+      },
+      "formatting": {
+        "formatter": "comb_array",
+        "stripNonDigits": true
+      },
+      "combConfig": {
+        "cellCount": 9,
+        "cellWidth": 11.5,
+        "pitch": 12.2,
+        "alignment": "left"
+      }
+    },
+    {
+      "id": "f1040_p2_refund_account_type",
+      "name": "Page 2 Line 35c: Account type (Checking / Savings)",
+      "page": 2,
+      "type": "radio_group",
+      "bounds": {
+        "x": 260,
+        "y": 450,
+        "width": 140,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.refund.accountType"
+      },
+      "markSymbol": "X",
+      "radioOptions": [
+        {
+          "value": "CHECKING",
+          "label": "Checking",
+          "bounds": {
+            "x": 265,
+            "y": 452,
+            "width": 10,
+            "height": 10
+          }
+        },
+        {
+          "value": "SAVINGS",
+          "label": "Savings",
+          "bounds": {
+            "x": 335,
+            "y": 452,
+            "width": 10,
+            "height": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "f1040_p2_refund_account_number",
+      "name": "Page 2 Line 35d: Account number (Comb 17 Cells)",
+      "page": 2,
+      "type": "comb",
+      "bounds": {
+        "x": 400,
+        "y": 450,
+        "width": 175,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.refund.accountNumber"
+      },
+      "formatting": {
+        "formatter": "comb_array",
+        "stripNonDigits": true
+      },
+      "combConfig": {
+        "cellCount": 17,
+        "cellWidth": 10,
+        "pitch": 10.3,
+        "alignment": "left"
+      }
+    },
+    {
+      "id": "f1040_p2_taxpayer_occupation",
+      "name": "Your occupation",
+      "page": 2,
+      "type": "text",
+      "bounds": {
+        "x": 390,
+        "y": 640,
+        "width": 180,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.primaryTaxpayer.occupation"
+      },
+      "formatting": {
+        "formatter": "uppercase"
+      }
+    },
+    {
+      "id": "f1040_p2_spouse_occupation",
+      "name": "Spouse's occupation",
+      "page": 2,
+      "type": "text",
+      "bounds": {
+        "x": 390,
+        "y": 665,
+        "width": 180,
+        "height": 14
+      },
+      "binding": {
+        "path": "$.spouseTaxpayer.occupation"
+      },
+      "formatting": {
+        "formatter": "uppercase"
+      }
+    }
+  ]
+}

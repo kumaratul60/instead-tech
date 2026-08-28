@@ -1,0 +1,76 @@
+{
+  "taxYear": 2025,
+  "filingStatus": "MARRIED_FILING_JOINTLY",
+  "digitalAssetsAnswer": false,
+  "primaryTaxpayer": {
+    "firstName": "ALEXANDER",
+    "middleInitial": "J",
+    "lastName": "HAMILTON",
+    "ssn": "123456789",
+    "occupation": "TREASURY SECRETARY",
+    "isBlind": false,
+    "isOver65": false
+  },
+  "spouseTaxpayer": {
+    "firstName": "ELIZABETH",
+    "middleInitial": "S",
+    "lastName": "SCHUYLER",
+    "ssn": "987654321",
+    "occupation": "PHILANTHROPIST",
+    "isBlind": false,
+    "isOver65": false
+  },
+  "address": {
+    "street": "57 WALL STREET",
+    "aptNumber": "SUITE 4B",
+    "city": "NEW YORK",
+    "state": "NY",
+    "zipCode": "10005"
+  },
+  "income": {
+    "w2s": [
+      {
+        "employerEin": "12-3456789",
+        "employerName": "UNITED STATES TREASURY",
+        "wages": 185450.75,
+        "federalWithholding": 38200,
+        "socialSecurityWages": 168600,
+        "socialSecurityTax": 10453.2,
+        "medicareWages": 185450.75,
+        "medicareTax": 2689.04,
+        "stateWages": 185450.75,
+        "stateTax": 11500,
+        "stateAbbreviation": "NY"
+      },
+      {
+        "employerEin": "98-7654321",
+        "employerName": "FIRST BANK OF NEW YORK",
+        "wages": 64500.25,
+        "federalWithholding": 11400,
+        "socialSecurityWages": 64500.25,
+        "socialSecurityTax": 3999.02,
+        "medicareWages": 64500.25,
+        "medicareTax": 935.25,
+        "stateWages": 64500.25,
+        "stateTax": 3800,
+        "stateAbbreviation": "NY"
+      }
+    ],
+    "taxableInterest": 3420.5,
+    "ordinaryDividends": 8750,
+    "qualifiedDividends": 7200,
+    "capitalGains": 14200,
+    "totalW2Wages": 249951,
+    "totalIncome": 276321.5
+  },
+  "payments": {
+    "federalWithholdingTotal": 49600,
+    "estimatedTaxPayments": 5000
+  },
+  "refund": {
+    "amount": 4520.8,
+    "routingNumber": "021000021",
+    "accountNumber": "9876543210123",
+    "accountType": "CHECKING"
+  }
+}
